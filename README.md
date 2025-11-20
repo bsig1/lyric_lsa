@@ -1,7 +1,8 @@
 # Lyric LSA Project
 
 **Higher Level Overview**
-The point of this project is to see how the lyrics of an artist compare to there genre. The central hypothesis is that
+The ultimate goal is to embed artists into a semantic space based purely on their lyrical content and compare that structure to their 
+genre-based relationships. The central hypothesis is that
 *lyrical similarity* between two artists correlates to the *genre similarity* between two artists.
 
 ## Step 1
@@ -26,13 +27,15 @@ Take the lyrics and associate them to artists.
 
 ## Step 4:
 Build lyric matrix
-- Define a matrix whose rows are the terms and columns are artists
+- Define a sparce matrix X whose rows are the terms and columns are artists
 - Run SciKit TfidfTransformer, this is an algorithm that weights rarer, more meaningful words higher, while weighting down words like
-(I a that the) that are less meaningful. Then the algorithm normalizes document length. This is a pretty normal practice for
-these kinds of LSA projects, it allows for better representation of semantic meaning with less noise in general.
+(I a that the) that are less meaningful. Then the algorithm normalizes document length. TF-IDF is essential because raw word counts are
+dominated by extremely common words; TF-IDF reweights terms so that rare, content-bearing words drive the embedding.
 - Run SVD on this matrix
 Much easier said than done. Consider this matrix, the dimmensions are the number of different terms (n), by the number
-of artists (m) ~(16,000,000 X 700,000). A nieve implementation of SVD would be basically computationally impossible, so this program
+of artists (m) ~(16,000,000 X 700,000). A nieve implementation of SVD would be basically computationally impossible. The only
+reason this matrix is useable right now is because of how sparse it is, running svd would create twice as many dense values
+this is just a non-starter. So instead, this program
 uses the Python SciKit package's Truncated SVD, with Fit Transform. Instead of computing the entire transform, then reducing
 to the number of singular values (k). This function immediately reduces the matricies to (k X n), orders of magnitude more workable
 than the full matrix.
@@ -147,7 +150,7 @@ Then normalize it under the 2 norm for comparison between them.
 - In the data set there are 6 genres, so every vector is of length 6, these genres are:
 (rock,pop,misc,rap,r&b,country)
 
-## Step 5:
+## Step 6:
 What is similarity?
 
 For genre vectors, we have a normalized vector only with only positive domain. These vectors point in some direction in
