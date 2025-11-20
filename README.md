@@ -3,7 +3,7 @@
 **Higher Level Overview**
 The ultimate goal is to embed artists into a semantic space based purely on their lyrical content and compare that structure to their 
 genre-based relationships. The central hypothesis is that
-*lyrical similarity* between two artists correlates to the *genre similarity* between two artists.
+*lyrical similarity* between two artists "correlates to"/"can predict" the *genre similarity* between two artists.
 
 ## Step 1
 
@@ -20,6 +20,7 @@ Take all of the lyrics in the database and process them.
 - Then begin "lemmatization" the process of taking words and bringing them into a common form.
 - The python package SpaCy does dictionary lookups to merge words like (make making makes made) into a common (make)
 - Use spacy on all lyrics to group together and count common words for each song.
+- The final output is word "tokens" where similar words all become one token.
 
 ## Step 3:
 Take the lyrics and associate them to artists.
@@ -239,6 +240,46 @@ and for k between 300 and 800 they reach moderate strength (up to r ≈ 0.53), i
 | **300**     | 0.223 → 0.476                    | 0.242 → 0.489                     | Moderate correlation; LSA best reflects genre structure |
 | **500**     | 0.227 → 0.484                    | 0.221 → 0.465                     | Similar to k=300; stable, moderate relationships        |
 | **800**     | 0.246 → 0.533                    | 0.273 → 0.486                     | Strongest correlations; diminishing returns beyond this |
+
+## Conclusions
+
+While there is a non-trivial correlation between lyric LSA and genre, it does not seem to be sufficient to predict genre from lyrical content alone.
+There is ongoing research about using machine learning to predict genre off of song content, but this uses much more sophisticated methods than simply
+lyric analysis, though it does factor in.
+ex. (Multimodal Deep Learning for Music Genre Classification (Oramas et al., 2018))
+
+Notice that as the k value gets higher, artists tend to be more and more similar. This seems counter intuitive at first. But, my speculation
+is that it is related to the IDF algorithm. This algorithm weights uncommon words a lot, while diminishing the effect of common words that show up everywhere.
+Thus as k values get larger, the LSA vectors start to encode very common words.
+Here are the top words in the data set and their weight in the model.
+
+## Top 20 out of 43,000,000 different mentioned tokens
+| word | count      | percent   | weight |
+| ---- | ---------- | --------- | ------ |
+| i    | 51,194,268 | 4.496792% | 0.287  |
+| the  | 42,139,306 | 3.703446% | 0.315  |
+| you  | 33,740,687 | 2.964660% | 0.345  |
+| to   | 24,588,582 | 2.160015% | 0.383  |
+| and  | 22,104,536 | 1.942804% | 0.396  |
+| a    | 21,763,634 | 1.911848% | 0.398  |
+| it   | 18,049,559 | 1.585547% | 0.421  |
+| my   | 15,419,594 | 1.354934% | 0.437  |
+| me   | 14,911,646 | 1.309794% | 0.440  |
+| in   | 14,279,648 | 1.254260% | 0.444  |
+| that | 12,623,881 | 1.108612% | 0.454  |
+| of   | 12,601,138 | 1.106625% | 0.454  |
+| n't  | 11,889,248 | 1.044361% | 0.458  |
+| do   | 10,547,418 | 0.926576% | 0.466  |
+| 's   | 9,953,656  | 0.874500% | 0.469  |
+| on   | 9,711,829  | 0.853105% | 0.471  |
+| we   | 8,674,277  | 0.761903% | 0.477  |
+| 'm   | 8,589,188  | 0.754439% | 0.478  |
+| your | 8,086,510  | 0.710202% | 0.481  |
+| is   | 7,813,084  | 0.686664% | 0.483  |
+
+
+
+
 
 
 
