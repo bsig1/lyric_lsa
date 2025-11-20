@@ -189,7 +189,7 @@ be compared through the dot product. The higher it is, the more similar the enco
 Note all of these vectors in these data are normalized aswell.
 
 ## Step 6:
-The research question this entire process is built around is trying to compare Latent Semantic Analysis difference to genre difference..
+The research question this entire process is built around is trying to compare Latent Semantic Analysis difference to genre difference.
 So how do we test this?
 
 We can start by taking an artist and plotting its similarity to each other artist on a scatterplot. On the X axis we can put
