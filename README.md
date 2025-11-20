@@ -27,6 +27,9 @@ Take the lyrics and associate them to artists.
 ## Step 4:
 Build lyric matrix
 - Define a matrix whose rows are the terms and columns are artists
+- Run SciKit TfidfTransformer, this is an algorithm that weights rarer more meaningful higher, while weighting down words like
+(I a that the) that are less meaningful. Then the algorithm normalizes document length. This is a pretty normal practice for
+these kinds of LSA projects, it allows for better representation of semantic meaning with less noise in general.
 - Run SVD on this matrix
 Much easier said than done. Consider this matrix, the dimmensions are the number of different terms (n), by the number
 of artists (m) ~(16,000,000 X 700,000). A nieve implementation of SVD would be basically computationally impossible, so this program
@@ -130,7 +133,9 @@ a subscript in Markdown).
 8. Return embedding: Z = U_k Σ_k. This is what is stored. Note that Z = U_k​Σ_k​= XV_k.
 
 In the context of this problem, V represents the term embeddings of each singular value, while U represents the artist embeddings.
-The vector stored for each artist in the artist embeddings weighted by the corresponding singular values.
+The vector stored for each artist in the artist embeddings weighted by the corresponding singular values, then normalized for 
+consistency between artists. Without this something like an artist having a larger amount of songs could give them a 
+larger simmilarity score between other artists, somewhat arbitrarily.
 
 ## Step 5:
 Define Genre vectors
@@ -174,7 +179,11 @@ Running this same process for many different random artists, gives some kind of 
 Ideally, this would be ran for every artist, but this is too computationally expensive (700,000 artists ran on 700,000 artists
 is about 4.9*10^11 operations). So instead we sample a subset of these artists, (1000 in this case).
 
-TODO: Elaborate on multiple correlation stats.
+For each k value (10,50,100,300,500,800) and the artists 1 -> 9 we run both Pearson and Spearman regressions between this artist
+and all other artists. Pearson and Spearman are used to test for correlation in both
+direct comparison, and rank comparison. Rank comparison is a better choice for this dataset since the exact numbers are less
+meaningful then the rankings of artists similarity with respect to each other. Note that the parameters were setup to have a
+95% confidence interval.
 
 ## Step 7:
 Note in the core idea of this assignment is different k values for svd. This analysis was ran with k values (10,50,100,300,500,800)
