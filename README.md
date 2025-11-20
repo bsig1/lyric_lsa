@@ -49,6 +49,8 @@ We applied scikit-learn’s TfidfTransformer, which weights rarer, more meaningf
 
 TF-IDF also normalizes document length, which is essential when comparing artists with very different total lyric output.
 
+TF-IDF is defined IDF(t)=log(N/n​) where N is the total number of documents, and n is the number of documents that contain the term in question. In this case documents are artists.
+
 Finally, we ran SVD on this matrix.
 A naive SVD on a matrix of size roughly (16,000,000 × 700,000) would be computationally impossible. The only reason the matrix is usable at all is because of its sparsity; computing a full SVD would create dense matrices many times larger than the input, which is a non-starter.
 
@@ -315,7 +317,7 @@ with respect to there word usage, atleast somewhat similar with them present in 
 | 19   | do   | **0.2%**              |
 | 20   | at   | **0.2%**              |
 
-### Footnote
+### Footnotes
 
 More anecdotally, the artists mentioned that LSA called similar did "seem" more similar. Sad guitar music with sad guitar music,
 party music with party music, etc. In talking to a band on the list (Wave Function out of Seatle), their 3 top lyrical inspirations were in the top
