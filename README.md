@@ -27,7 +27,7 @@ Take the lyrics and associate them to artists.
 ## Step 4:
 Build lyric matrix
 - Define a matrix whose rows are the terms and columns are artists
-- Run SciKit TfidfTransformer, this is an algorithm that weights rarer more meaningful higher, while weighting down words like
+- Run SciKit TfidfTransformer, this is an algorithm that weights rarer, more meaningful words higher, while weighting down words like
 (I a that the) that are less meaningful. Then the algorithm normalizes document length. This is a pretty normal practice for
 these kinds of LSA projects, it allows for better representation of semantic meaning with less noise in general.
 - Run SVD on this matrix
@@ -185,6 +185,8 @@ direct comparison, and rank comparison. Rank comparison is a better choice for t
 meaningful then the rankings of artists similarity with respect to each other. Note that the parameters were setup to have a
 95% confidence interval.
 
+In practice, larger k values than 800 became incomputable, even with a very strong computer.
+
 ## Step 7:
 Note in the core idea of this assignment is different k values for svd. This analysis was ran with k values (10,50,100,300,500,800)
 These correlation values are measured against different k values to see how different levels of compression of the semantic data
@@ -192,7 +194,49 @@ results in different values of correlation.
 
 
 # Data: 
-TODO: Put in experiemental data.
+Across all tested LSA dimensions, LSA-based artist distances are significantly correlated with genre-based distances (p ≪ 0.001 due to large n). 
+At low dimensionality (k = 10), effect sizes are negligible (Pearson r ≈ 0.01–0.03). For k ≥ 50, correlations are small-to-moderate (r ≈ 0.3–0.4), 
+and for k between 300 and 800 they reach moderate strength (up to r ≈ 0.53), indicating that LSA captures a nontrivial but incomplete component of genre structure.
+
+
+What does the data look like at different k values?
+
+| LSA Dim (k) | Genre Distances (μ ± σ) | LSA Distances (μ ± σ) | Difference σ        | Interpretation                                               |
+| ----------- | ----------------------- | --------------------- | ------------------- | ------------------------------------------------------------ |
+| **10**      | **0.532 ± 0.43**        | **0.0384 ± 0.0762**   | **0.0767**          | LSA collapses semantic space; distances extremely compressed |
+| **50**      | **0.532 ± 0.43**        | **0.1859 ± 0.1577**   | **0.1599**          | Distances more expressive; LSA begins to encode structure    |
+| **100**     | **0.532 ± 0.43**        | **0.2299 ± 0.1648**   | **0.1643**          | Distances further separate; captures more semantic variance  |
+| **300**     | **0.532 ± 0.43**        | **0.7898 ± 0.1144**   | **0.1146**          | Distances well spread; LSA strongly encodes artist semantics |
+| **500**     | **0.532 ± 0.43**        | **0.7978 ± 0.0793**   | **0.0794**          | Very stable; variance decreases as k increases               |
+| **800**     | **0.532 ± 0.43**        | **0.8352 ± 0.1002**   | **0.1001**          | Slightly more variance; distances remain high-quality        |
+
+What do different artist's plots look like?
+
+| Artist (ID) | Genre Dist μ ± σ | LSA Dist μ ± σ  | Difference σ | Notes                                       |
+| ----------- | ---------------- | --------------- | ------------ | ------------------------------------------- |
+| **1**       | 0.5224 ± 0.4241  | 0.9214 ± 0.0510 | 0.0510       | Strong separation; stable                   |
+| **2**       | 0.5652 ± 0.4647  | 0.5069 ± 0.1384 | 0.1384       | More variable LSA distribution              |
+| **3**       | 0.5349 ± 0.4374  | 0.8856 ± 0.0520 | 0.0520       | Similar to Artist 1                         |
+| **4**       | 0.5274 ± 0.4297  | 0.9124 ± 0.0510 | 0.0510       | Very stable high-quality embedding          |
+| **5**       | 0.5179 ± 0.4192  | 0.2575 ± 0.1994 | 0.1994       | LSA distances poorly spread for this artist |
+| **6**       | 0.5444 ± 0.4467  | 0.2907 ± 0.1972 | 0.1972       | Similar to Artist 5 (clusters collapsed)    |
+| **7**       | 0.4915 ± 0.3869  | 0.3481 ± 0.1999 | 0.1999       | Noisy distribution                          |
+| **8**       | 0.5686 ± 0.4685  | 0.9232 ± 0.0554 | 0.0554       | Very clean, stable LSA distances            |
+| **9**       | 0.5478 ± 0.4498  | 0.3877 ± 0.1917 | 0.1917       | Moderate performance                        |
+
+
+How well do these data correlate?
+
+| LSA Dim (k) | Pearson r (range across artists) | Spearman r (range across artists) | Interpretation                                          |
+| ----------- | -------------------------------- | --------------------------------- | ------------------------------------------------------- |
+| **10**      | 0.007 → 0.034                    | 0.078 → 0.170                     | Very weak; LSA underfits; genre signal barely detected  |
+| **50**      | 0.292 → 0.399                    | 0.397 → 0.486                     | Small-to-moderate linear/monotonic correlation          |
+| **100**     | 0.260 → 0.447                    | 0.327 → 0.474                     | Moderate correlation; performance stabilizes            |
+| **300**     | 0.223 → 0.476                    | 0.242 → 0.489                     | Moderate correlation; LSA best reflects genre structure |
+| **500**     | 0.227 → 0.484                    | 0.221 → 0.465                     | Similar to k=300; stable, moderate relationships        |
+| **800**     | 0.246 → 0.533                    | 0.273 → 0.486                     | Strongest correlations; diminishing returns beyond this |
+
+
 
 
 
