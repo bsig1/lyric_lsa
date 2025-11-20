@@ -32,14 +32,14 @@ Build lyric matrix
 (I a that the) that are less meaningful. Then the algorithm normalizes document length. TF-IDF is essential because raw word counts are
 dominated by extremely common words; TF-IDF reweights terms so that rare, content-bearing words drive the embedding.
 - Run SVD on this matrix
-Much easier said than done. Consider this matrix, the dimmensions are the number of different terms (n), by the number
-of artists (m) ~(16,000,000 X 700,000). A nieve implementation of SVD would be basically computationally impossible. The only
-reason this matrix is useable right now is because of how sparse it is, running svd would create twice as many dense values
+Much easier said than done. Consider this matrix, the dimensions are the number of different terms (n), by the number
+of artists (m) ~(16,000,000 X 700,000). A naive implementation of SVD would be basically computationally impossible. The only
+reason this matrix is useable right now is because of how sparse it is, running SVD would create twice as many dense values
 this is just a non-starter. So instead, this program
 uses the Python SciKit package's Truncated SVD, with Fit Transform. Instead of computing the entire transform, then reducing
-to the number of singular values (k). This function immediately reduces the matricies to (k X n), orders of magnitude more workable
+to the number of singular values (k). This function immediately reduces the matrices to (k X n), orders of magnitude more workable
 than the full matrix.
-Heres how it works:
+Here's how it works:
 
 ### Randomized SVD
 *Nathan Halko, Per-Gunnar Martinsson, Joel Tropp (2011)*
