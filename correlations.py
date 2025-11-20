@@ -1,6 +1,7 @@
 from scipy.stats import pearsonr
 import sqlite3
 from tqdm import tqdm
+import numpy as np
 
 conn = sqlite3.connect("lyrics.db")
 curs = conn.cursor()
@@ -15,9 +16,19 @@ curs.execute(f"""
 """)
 distance_sims = []
 genre_sims = []
+
 for row in tqdm(curs.fetchall()):
     distance_sims.append(row[0])
     genre_sims.append(row[1])
+
+
+distance_sims = np.asarray(distance_sims, dtype=np.float64).ravel()
+genre_sims   = np.asarray(genre_sims,   dtype=np.float64).ravel()
+
+mask = np.isfinite(distance_sims) & np.isfinite(genre_sims)
+distance_sims = distance_sims[mask]
+genre_sims    = genre_sims[mask]
+
 
 r, p = pearsonr(distance_sims, genre_sims)
 print("Correlation:", r)

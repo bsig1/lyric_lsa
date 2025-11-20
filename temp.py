@@ -3,7 +3,7 @@ import sqlite3
 from tqdm import tqdm
 from sklearn.metrics.pairwise import cosine_similarity
 
-TARGET_ARTIST_ID = 429061
+TARGET_ARTIST_ID = 1106
 
 def main(k: int):
     conn = sqlite3.connect("lyrics.db")
@@ -53,7 +53,7 @@ def main(k: int):
 
     curs.executemany(
         f"""
-        INSERT INTO {out_table}
+        INSERT OR IGNORE INTO {out_table}
         (artist_id1, artist_id2, distance)
         VALUES (?, ?, ?)
         """,
