@@ -253,7 +253,7 @@ is that it is related to the IDF algorithm. This algorithm weights uncommon word
 Thus as k values get larger, the LSA vectors start to encode very common words.
 Here are the top words in the data set and their weight in the model.
 
-## Top 20 out of 43,000,000 different mentioned tokens
+## Top 20 out of 430,000,000 different mentioned tokens
 | word | count      | percent   | weight |
 | ---- | ---------- | --------- | ------ |
 | i    | 51,194,268 | 4.496792% | 0.287  |
