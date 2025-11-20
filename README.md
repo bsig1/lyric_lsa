@@ -5,43 +5,58 @@ The ultimate goal is to embed artists into a semantic space based purely on thei
 genre-based relationships. The central hypothesis is that
 *lyrical similarity* between two artists "correlates to"/"can predict" the *genre similarity* between two artists.
 
+## Abstract
+
+While these data did show non-trivial correlation between lyrics and genre, lyrics alone are not a sufficient predictor of genre.
+More information is needed, in many studies machine learning today things like instrument variety, tempo, key, and time signature are 
+factored in to get more accurate results. Though this approach was not sufficient, if this method was used with other methods, a strong
+genre predictive algorithm could be created.
+
+# Methods
+
 ## Step 1
 
-Find a dataset of many different songs and their lyrics with artists.
-
-In this case, it was a subset of the Genius lyric database found online for download in the form of a csv.
+We began by finding a dataset of many different songs and their lyrics with artist information.
+In this case, it was a subset of the Genius lyric database found online for download in the form of a CSV:
 https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information
 
-Convert this into the form of a database for access efficiency, for the sake of the scale of the data.
-anything else would be slow.
+We converted this into the form of a database for access efficiency. Given the scale of the data, anything else would have been slow.
 
-## Step 2:
-Take all of the lyrics in the database and process them.
-- Start by removing punctuation and lowercasing all letters.
-- Then begin "lemmatization" the process of taking words and bringing them into a common form.
-- The python package SpaCy does dictionary lookups to merge words like (make making makes made) into a common (make)
-- Use spacy on all lyrics to group together and count common words for each song.
-- The final output is word "tokens" where similar words all become one token.
+## Step 2
 
-## Step 3:
-Take the lyrics and associate them to artists.
-- Group all lyrics in all tracks by artist. Resulting in a tally for each word for each artist with words merged together.
+- We then processed all of the lyrics in the database.
 
-## Step 4:
-Build lyric matrix
-- Define a sparce matrix X whose rows are the terms and columns are artists
-- Run SciKit TfidfTransformer, this is an algorithm that weights rarer, more meaningful words higher, while weighting down words like
-(I a that the) that are less meaningful. Then the algorithm normalizes document length. TF-IDF is essential because raw word counts are
-dominated by extremely common words; TF-IDF reweights terms so that rare, content-bearing words drive the embedding.
-- Run SVD on this matrix
-Much easier said than done. Consider this matrix, the dimensions are the number of different terms (n), by the number
-of artists (m) ~(16,000,000 X 700,000). A naive implementation of SVD would be basically computationally impossible. The only
-reason this matrix is useable right now is because of how sparse it is, running SVD would create twice as many dense values
-this is just a non-starter. So instead, this program
-uses the Python SciKit package's Truncated SVD, with Fit Transform. Instead of computing the entire transform, then reducing
-to the number of singular values (k). This function immediately reduces the matrices to (k X n), orders of magnitude more workable
-than the full matrix.
-Here's how it works:
+- We removed punctuation and lowercased all letters.
+
+- We performed lemmatization, the process of taking words and bringing them into a common form.
+
+- We used SpaCy, which performs dictionary lookups to merge words like (make, making, makes, made) into the common form (make).
+
+- We applied SpaCy to all lyrics to group and count common words for each song.
+
+- The final output at this stage was a set of word “tokens” where similar words were merged into a single canonical token.
+
+## Step 3
+
+Next, we associated lyrics with artists.
+We grouped all lyrics in all tracks by artist, resulting in a tally for each word for each artist, with all similar words already merged.
+
+## Step 4
+
+We then built the lyric matrix.
+
+We defined a sparse matrix X whose rows are terms and columns are artists.
+
+We applied scikit-learn’s TfidfTransformer, which weights rarer, more meaningful words higher and weights down extremely common words (I, a, that, the). Raw word counts are dominated by extremely frequent words; TF-IDF reweights terms so that rare, content-bearing words drive the embedding.
+
+TF-IDF also normalizes document length, which is essential when comparing artists with very different total lyric output.
+
+Finally, we ran SVD on this matrix.
+A naive SVD on a matrix of size roughly (16,000,000 × 700,000) would be computationally impossible. The only reason the matrix is usable at all is because of its sparsity; computing a full SVD would create dense matrices many times larger than the input, which is a non-starter.
+
+To handle this, we used Scikit-Learn’s Truncated SVD with fit_transform. Instead of computing the full decomposition and then reducing to the top k singular values, the truncated version immediately reduces the representation to (k × n), which is orders of magnitude more manageable than the full matrix.
+
+This algorithm uses randomized methods to approximate the top-k singular subspace without ever materializing dense intermediate matrices, making the entire pipeline feasible at this scale.
 
 ### Randomized SVD
 *Nathan Halko, Per-Gunnar Martinsson, Joel Tropp (2011)*
@@ -199,7 +214,7 @@ These correlation values are measured against different k values to see how diff
 results in different values of correlation.
 
 
-# Data: 
+# Results: 
 Across all tested LSA dimensions, LSA-based artist distances are significantly correlated with genre-based distances (p ≪ 0.001 due to large n). 
 At low dimensionality (k = 10), effect sizes are negligible (Pearson r ≈ 0.01–0.03). For k ≥ 50, correlations are small-to-moderate (r ≈ 0.3–0.4), 
 and for k between 300 and 800 they reach moderate strength (up to r ≈ 0.53), indicating that LSA captures a nontrivial but incomplete component of genre structure.
