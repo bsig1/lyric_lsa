@@ -23,9 +23,7 @@ https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-info
 We converted this into the form of a database for access efficiency. Given the scale of the data, anything else would have been slow.
 
 ## Step 2
-
-- We then processed all of the lyrics in the database.
-
+We then processed all of the lyrics in the database.
 - We removed punctuation and lowercased all letters.
 
 - We performed lemmatization, the process of taking words and bringing them into a common form.
