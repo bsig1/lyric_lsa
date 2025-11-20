@@ -159,11 +159,11 @@ consistency between artists. Without this something like an artist having a larg
 larger simmilarity score between other artists, somewhat arbitrarily.
 
 ## Step 5:
-Define Genre vectors
+We defined Genre vectors
 - For each artist define a "genre vector" these vectors could be something like
 (rock,pop,alternative)
 (20%,10%,70%)
-Normalize each genre vector under the 2 norm so all artists live on the same unit hypersphere.
+We normalize each genre vector under the 2 norm so all artists live on the same unit hypersphere.
 - An artists genre is defined by the ratio of how many of there songs are reported as what genre under the dataset.
 - In the data set there are 6 genres, so every vector is of length 6, these genres are:
 (rock,pop,misc,rap,r&b,country)
