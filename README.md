@@ -10,6 +10,7 @@ genre-based relationships. The central hypothesis is that
 Find a dataset of many different songs and their lyrics with artists.
 
 In this case, it was a subset of the Genius lyric database found online for download in the form of a csv.
+https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information
 
 Convert this into the form of a database for access efficiency, for the sake of the scale of the data.
 anything else would be slow.
