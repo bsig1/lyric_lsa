@@ -199,7 +199,7 @@ At low dimensionality (k = 10), effect sizes are negligible (Pearson r ≈ 0.01�
 and for k between 300 and 800 they reach moderate strength (up to r ≈ 0.53), indicating that LSA captures a nontrivial but incomplete component of genre structure.
 
 
-What does the data look like at different k values?
+## What does the data look like at different k values?
 
 | LSA Dim (k) | Genre Distances (μ ± σ) | LSA Distances (μ ± σ) | Difference σ        | Interpretation                                               |
 | ----------- | ----------------------- | --------------------- | ------------------- | ------------------------------------------------------------ |
@@ -210,7 +210,7 @@ What does the data look like at different k values?
 | **500**     | **0.532 ± 0.43**        | **0.7978 ± 0.0793**   | **0.0794**          | Very stable; variance decreases as k increases               |
 | **800**     | **0.532 ± 0.43**        | **0.8352 ± 0.1002**   | **0.1001**          | Slightly more variance; distances remain high-quality        |
 
-What do different artist's plots look like?
+## What do different artist's plots look like?
 
 | Artist (ID) | Genre Dist μ ± σ | LSA Dist μ ± σ  | Difference σ | Notes                                       |
 | ----------- | ---------------- | --------------- | ------------ | ------------------------------------------- |
@@ -225,7 +225,7 @@ What do different artist's plots look like?
 | **9**       | 0.5478 ± 0.4498  | 0.3877 ± 0.1917 | 0.1917       | Moderate performance                        |
 
 
-How well do these data correlate?
+## How well do these data correlate?
 
 | LSA Dim (k) | Pearson r (range across artists) | Spearman r (range across artists) | Interpretation                                          |
 | ----------- | -------------------------------- | --------------------------------- | ------------------------------------------------------- |
