@@ -133,7 +133,8 @@ a subscript in Markdown).
 
 7. Now recover the left singular subspace by U_k = Q U'_k.
 
-8. Return embedding: Z = U_k Σ_k. This is what is stored. Note that Z = U_k​Σ_k​= XV_k.
+8. Return embedding: Z = U_k Σ_k. This is what is stored. Note that Z = U_k​Σ_k​= XV_k. Multiplying by the singular values Σ ensures that
+   artists with larger contributions along important latent directions receive proportionally stronger weights.
 
 In the context of this problem, V represents the term embeddings of each singular value, while U represents the artist embeddings.
 The vector stored for each artist in the artist embeddings weighted by the corresponding singular values, then normalized for 
@@ -145,7 +146,7 @@ Define Genre vectors
 - For each artist define a "genre vector" these vectors could be something like
 (rock,pop,alternative)
 (20%,10%,70%)
-Then normalize it under the 2 norm for comparison between them.
+Normalize each genre vector under the 2 norm so all artists live on the same unit hypersphere.
 - An artists genre is defined by the ratio of how many of there songs are reported as what genre under the dataset.
 - In the data set there are 6 genres, so every vector is of length 6, these genres are:
 (rock,pop,misc,rap,r&b,country)
@@ -184,8 +185,8 @@ is about 4.9*10^11 operations). So instead we sample a subset of these artists, 
 
 For each k value (10,50,100,300,500,800) and the artists 1 -> 9 we run both Pearson and Spearman regressions between this artist
 and all other artists. Pearson and Spearman are used to test for correlation in both
-direct comparison, and rank comparison. Rank comparison is a better choice for this dataset since the exact numbers are less
-meaningful then the rankings of artists similarity with respect to each other. Note that the parameters were setup to have a
+direct comparison, and rank comparison. Spearman is especially useful here because absolute distances vary widely across artists,
+but rankings of similar artists remain stable. Note that the parameters were setup to have a
 95% confidence interval.
 
 In practice, larger k values than 800 became incomputable, even with a very strong computer.
