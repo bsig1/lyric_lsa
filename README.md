@@ -203,7 +203,6 @@ Across all tested LSA dimensions, LSA-based artist distances are significantly c
 At low dimensionality (k = 10), effect sizes are negligible (Pearson r ≈ 0.01–0.03). For k ≥ 50, correlations are small-to-moderate (r ≈ 0.3–0.4), 
 and for k between 300 and 800 they reach moderate strength (up to r ≈ 0.53), indicating that LSA captures a nontrivial but incomplete component of genre structure.
 
-
 ## What does the data look like at different k values?
 
 | LSA Dim (k) | Genre Distances (μ ± σ) | LSA Distances (μ ± σ) | Difference σ        | Interpretation                                               |
@@ -243,12 +242,12 @@ and for k between 300 and 800 they reach moderate strength (up to r ≈ 0.53), i
 
 ## Conclusions
 
-While there is a non-trivial correlation between lyric LSA and genre, it does not seem to be sufficient to predict genre from lyrical content alone.
+1. While there is a non-trivial correlation between lyric LSA and genre, it does not seem to be sufficient to predict genre from lyrical content alone.
 There is ongoing research about using machine learning to predict genre off of song content, but this uses much more sophisticated methods than simply
 lyric analysis, though it does factor in.
 ex. (Multimodal Deep Learning for Music Genre Classification (Oramas et al., 2018))
 
-Notice that as the k value gets higher, artists tend to be more and more similar. This seems counter intuitive at first. But, my speculation
+2. Notice that as the k value gets higher, artists tend to be more and more similar. This seems counter intuitive at first. But, my speculation
 is that it is related to the IDF algorithm. This algorithm weights uncommon words a lot, while diminishing the effect of common words that show up everywhere.
 Thus as k values get larger, the LSA vectors start to encode very common words, even though their weighted down, they are still present, and with a high enough
 k value, they are going to be encoded. These words show up in pretty much all songs in high quanity, making all songs,
@@ -301,6 +300,12 @@ with respect to there word usage, atleast somewhat similar with them present in 
 | 18   | you  | **0.3%**              |
 | 19   | do   | **0.2%**              |
 | 20   | at   | **0.2%**              |
+
+### Footnote
+
+More anecdotally, the artists mentioned that LSA called similar did "seem" more similar. Sad guitar music with sad guitar music,
+party music with party music, etc. In talking to a band on the list (Wave Function out of Seatle), their 3 top lyrical inspirations were in the top
+0.01% of artists when sorted by LSA cosine distance at a k value of 800. An argument in favor of the predictive power of this analysis.
 
 
 
