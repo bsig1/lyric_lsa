@@ -254,7 +254,7 @@ Thus as k values get larger, the LSA vectors start to encode very common words.
 Here are the top words in the data set and their weight in the model.
 
 ## Top 20 out of 430,703,936 different mentioned tokens
-| word | count      | percent   |~weight |
+| word | count      | percent   |~weight |  
 | ---- | ---------- | --------- | ------ |
 | i    | 51,194,268 | 4.496792% | 0.287  |
 | the  | 42,139,306 | 3.703446% | 0.315  |
@@ -277,7 +277,29 @@ Here are the top words in the data set and their weight in the model.
 | your | 8,086,510  | 0.710202% | 0.481  |
 | is   | 7,813,084  | 0.686664% | 0.483  |
 
-
+## Top 20 words of English generally for comparison
+| Rank | Word | Approx % of all words |
+| ---- | ---- | --------------------- |
+| 1    | the  | **5.0%**              |
+| 2    | be   | **1.0%**              |
+| 3    | to   | **1.0%**              |
+| 4    | of   | **1.0%**              |
+| 5    | and  | **0.9%**              |
+| 6    | a    | **0.8%**              |
+| 7    | in   | **0.7%**              |
+| 8    | that | **0.6%**              |
+| 9    | have | **0.5%**              |
+| 10   | I    | **0.5%**              |
+| 11   | it   | **0.5%**              |
+| 12   | for  | **0.4%**              |
+| 13   | not  | **0.4%**              |
+| 14   | on   | **0.4%**              |
+| 15   | with | **0.3%**              |
+| 16   | he   | **0.3%**              |
+| 17   | as   | **0.3%**              |
+| 18   | you  | **0.3%**              |
+| 19   | do   | **0.2%**              |
+| 20   | at   | **0.2%**              |
 
 
 
