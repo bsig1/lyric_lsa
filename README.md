@@ -250,8 +250,9 @@ ex. (Multimodal Deep Learning for Music Genre Classification (Oramas et al., 201
 
 Notice that as the k value gets higher, artists tend to be more and more similar. This seems counter intuitive at first. But, my speculation
 is that it is related to the IDF algorithm. This algorithm weights uncommon words a lot, while diminishing the effect of common words that show up everywhere.
-Thus as k values get larger, the LSA vectors start to encode very common words.
-Here are the top words in the data set and their weight in the model.
+Thus as k values get larger, the LSA vectors start to encode very common words, even though their weighted down, they are still present, and with a high enough
+k value, they are going to be encoded. These words show up in pretty much all songs in high quanity, making all songs,
+with respect to there word usage, atleast somewhat similar with them present in the data. See table below for aproximate weighting.
 
 ## Top 20 out of 430,703,936 different mentioned tokens
 | word | count      | percent   |~weight |  
